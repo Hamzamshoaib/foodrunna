@@ -33,8 +33,8 @@
         <!-- Database connection settings -->
         <property name="connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
         <property name="connection.url">jdbc:derby://localhost:1527/foodrunnaDB;create=true</property>
-        <property name="connection.username">Hamza</property>
-        <property name="connection.password">12Ghatatop</property>
+        <property name="connection.username">foodrunna</property>
+        <property name="connection.password">2_FoodRunna</property>
 
         <!-- JDBC connection pool (use the built-in) -->
         <property name="connection.pool_size">1</property>
@@ -53,7 +53,7 @@
 
         <!-- Names the annotated entity class -->
         <mapping class="com.foodrunna.DTO.UserDetails"/>
-
+		<mapping class="com.foodrunna.DTO.OrderDetails"/>
     </session-factory>
 
 </hibernate-configuration>
