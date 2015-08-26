@@ -1,6 +1,5 @@
 package com.foodrunna.DTO;
 
-import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 @Embeddable 

@@ -1,11 +1,27 @@
 package com.foodrunna.hibernate;
 
+import java.util.UUID;
+
+import org.hibernate.Session;
+
+import com.foodrunna.DTO.UserDetails;
+
 
 public class HibernateTest {
 
 	public static void main(String[] args) {
-		
-		
+//		UserDetails user = new UserDetails();
+//		user.setFirstName("Hamza");
+//		user.setLastName("Shoaib");
+		for (int i = 0; i < 10; i++) {
+			String email_Verification = UUID.randomUUID().toString().replaceAll("-",""); 
+			System.out.println(email_Verification);
+		}
+//		Session session = HibernateUtil.getSessionFactory().openSession();
+//		session.beginTransaction();
+//		session.save(user);
+//		session.getTransaction().commit();
+//		session.close();
 
 	}
 
