@@ -8,7 +8,7 @@
 <title>FoodRunna</title>
 </head>
 <body>
-
+	<!--If statement below checks if a session exists -->
 	<c:if test="${empty userEmail}">
 		<c:redirect url="http://localhost:8080/foodrunna/login" />
 	</c:if>	

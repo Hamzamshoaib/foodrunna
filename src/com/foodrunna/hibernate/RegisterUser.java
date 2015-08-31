@@ -7,6 +7,7 @@ import com.foodrunna.DTO.UserDetails;
 
 public class RegisterUser {
 	public static void addToDatabase(UserDetails user) {
+		//Saves user details in the database for registration
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.beginTransaction();

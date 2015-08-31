@@ -13,7 +13,7 @@ import com.foodrunna.DTO.UserDetails;
 
 public class VerifyUser {
 	
-	//Get First Name of the user given a unique Email Identifier
+	//Verifies user email address
 	public static void ChangeToVerified (String UniqueID) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		int result = 0;
@@ -31,8 +31,6 @@ public class VerifyUser {
 			e.printStackTrace();
 			session.getTransaction().rollback();
 		}
-		System.out.println("Rows Affected " + result);
-		System.out.println(UniqueID);
 	}
 
 }

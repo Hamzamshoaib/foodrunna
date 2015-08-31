@@ -22,7 +22,7 @@ public class GetUserDetails {
 		List<String> details = new ArrayList();
 		try {
 			session.beginTransaction();
-			System.out.println("get username");
+			//Creating criteria and projections for the SQL query
 			Criteria crit = session.createCriteria(UserDetails.class);
 			crit.add(Restrictions.eq("email_Verification", UniqueID));
 			ProjectionList proList = Projections.projectionList();
@@ -30,16 +30,14 @@ public class GetUserDetails {
 			proList.add(Projections.property("email_Verification"));
 			crit.setProjection(proList);
 			List<Object[]> result = crit.list();
+			//Retrieving the results
 			if (!result.isEmpty()) {
 				for (Object[] r: result) {
 					details.add((String)r[0]);
 					details.add((String)r[1]);				
 				}
 			}
-			/*String hql = "SELECT u.firstName, u.email_Verfication FROM UserDetails u WHERE email_Verification = :uniqueid";
-			Query query = session.createQuery(hql);
-			query.setString("uniqueid", UniqueID);
-			result = query.list();*/
+
 			session.getTransaction().commit();
 			session.close();
 		} catch (HibernateException e) {
@@ -50,6 +48,7 @@ public class GetUserDetails {
 		return details;	
 	}
 	
+	//Function checkst to see if an email address already exists in the database
 	public static boolean EmailExists (String email) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<String> result = new ArrayList();
@@ -68,6 +67,7 @@ public class GetUserDetails {
 		return false;
 		
 	}
+	//Checks to see if a userID already exists
 	public static boolean UserIdExists (String id) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		List<String> result = new ArrayList();
@@ -87,7 +87,7 @@ public class GetUserDetails {
 		
 	}
 	
-	
+	//Compares user input with login credentials in the database
 	public static String ValidateLogin (UserDetails loginInfo) {
 		String exists;
 		String value = new String();

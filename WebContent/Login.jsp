@@ -10,10 +10,11 @@
 <link rel="stylesheet" type="text/css" href="resources/css/mystyle.css">
 </head>
 <body>
-
+	<!-- If statement below checks to see if a session exists -->
 	<c:if test="${not empty userEmail}">
 		<c:redirect url="http://localhost:8080/foodrunna/Home.jsp" />
 	</c:if>	
+	<!-- Including the header file -->
 	<jsp:include page="/includeDirective/loginHeader.jsp" />
 	<div class="try"></div>
 	${message}

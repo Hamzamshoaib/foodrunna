@@ -9,8 +9,10 @@
 <title>FoodRunna - SignUp</title>
 </head>
 <body>
-	<a href="Login.jsp">Home</a>
+	<!-- Links back to the login/home page -->
+	<a href="http://localhost:8080/foodrunna/login">Home</a>
 	<h1>Registration Form</h1>
+	<!-- For loop below prints out all the error messages -->
 	<c:forEach var="msg" items="${message}">
 		<c:out value="${msg}" /> <br>
 	</c:forEach>

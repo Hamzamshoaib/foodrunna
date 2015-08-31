@@ -1,11 +1,18 @@
 package com.foodrunna.DTO;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -15,13 +22,33 @@ public class OrderDetails {
 	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int orderId;
-	@ManyToOne
+	
+	@ManyToOne (cascade = CascadeType.ALL)
+	@JoinColumn(name="USER_ID")
 	private UserDetails userId;
+	
+	@Column (name="RESTAURANT_NAME")
 	private String restaurantName;
+	
+	@Column (name="DELIVERY_TIME")
 	private String deliveryTime;
+	
 	@Embedded
+	@Column (name="DELIVERY_ADDRESS")
 	private Address deliveryAddress;
-	private String itemDetails;
+	
+	@Column(name="EXTRA_COST")
+	private int extraCost;
+	
+	@Column(name="TOTAL_COST")
+	private int totalCost;
+	
+	/*@ManyToMany
+	@JoinTable(name="ITEMS_IN_ORDER",
+			joinColumns={@JoinColumn(name="ORDER_ID")},
+			inverseJoinColumns={@JoinColumn(name="ITEM_ID")})*/
+	@OneToMany(mappedBy="order", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<ItemsInOrder> itemsInOrder;
 	
 	public int getOrderId() {
 		return orderId;
@@ -53,12 +80,25 @@ public class OrderDetails {
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
 	}
-	public String getItemDetails() {
-		return itemDetails;
+	public List<ItemsInOrder> getItemsInOrder() {
+		return itemsInOrder;
 	}
-	public void setItemDetails(String itemDetails) {
-		this.itemDetails = itemDetails;
+	public void setItemsInOrder(List<ItemsInOrder> itemsInOrder) {
+		this.itemsInOrder = itemsInOrder;
 	}
+	public int getExtraCost() {
+		return extraCost;
+	}
+	public void setExtraCost(int extraCost) {
+		this.extraCost = extraCost;
+	}
+	public int getTotalCost() {
+		return totalCost;
+	}
+	public void setTotalCost(int totalCost) {
+		this.totalCost = totalCost;
+	}
+
 	
 	
 }
