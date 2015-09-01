@@ -11,7 +11,22 @@
 	<!--If statement below checks if a session exists -->
 	<c:if test="${empty userEmail}">
 		<c:redirect url="http://localhost:8080/foodrunna/login" />
-	</c:if>	
+	</c:if>
 	<p>This is Home</p>
+	<form action="home" method="POST">
+		Restaurant: <input type="text" name="restaurant"><br>
+		Delivery Address:<br>
+		Street: <input type="text" name="street" value="${street}"><br>
+		Suburb: <input type="text" name="suburb" value="${suburb}"><br>
+		State: <input type="text" name="state" value="${state}"><br>
+		Postcode: <input type="text" name="postcode" value="${postcode}"><br>
+		Delivery Time: <input type="text" name="time"><br>
+		Order:<br>
+		<input type="text" name="order" placeholder="Item"> 
+		<input type="text" name="quantity" placeholder="Qty">
+		<input type="text" name="addinfo" placeholder="Additional Information">
+		<br>
+		<input type="submit" value="Order">
+	</form>
 </body>
 </html>

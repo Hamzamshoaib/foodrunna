@@ -1,7 +1,5 @@
 package com.foodrunna.DTO;
 
-import java.sql.Clob;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,6 +32,16 @@ public class ItemsInOrder {
 	@Column(name="DESCRIPTION", length = 32600)
 	private String description;
 	
+	public ItemsInOrder() {
+	}
+
+	public ItemsInOrder(OrderDetails order, ItemDetails item,
+			int quantity, String description) {
+		this.order = order;
+		this.item = item;
+		this.quantity = quantity;
+		this.description = description;
+	}
 
 	public int getId() {
 		return id;

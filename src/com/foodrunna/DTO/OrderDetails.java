@@ -20,6 +20,7 @@ import javax.persistence.Table;
 @Table (name = "ORDER_DETAILS")
 public class OrderDetails {
 	
+	
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int orderId;
 	
@@ -48,8 +49,21 @@ public class OrderDetails {
 			joinColumns={@JoinColumn(name="ORDER_ID")},
 			inverseJoinColumns={@JoinColumn(name="ITEM_ID")})*/
 	@OneToMany(mappedBy="order", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
-	private List<ItemsInOrder> itemsInOrder;
+	private List<ItemsInOrder> itemsInOrder;	
 	
+	public OrderDetails() {
+	}
+	
+	public OrderDetails(UserDetails userId, String restaurantName,
+			String deliveryTime, Address deliveryAddress, int extraCost,
+			int totalCost) {
+		this.userId = userId;
+		this.restaurantName = restaurantName;
+		this.deliveryTime = deliveryTime;
+		this.deliveryAddress = deliveryAddress;
+		this.extraCost = extraCost;
+		this.totalCost = totalCost;
+	}
 	public int getOrderId() {
 		return orderId;
 	}

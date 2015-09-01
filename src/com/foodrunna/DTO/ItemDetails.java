@@ -21,7 +21,7 @@ public class ItemDetails {
 	private int item_id;
 	
 	@Column(name="RESTAURANT_NAME")
-	private String RestaurantName;
+	private String restaurantName;
 	
 	@Column(name="ITEM_NAME")
 	private String itemName;
@@ -35,8 +35,15 @@ public class ItemDetails {
 	inverseJoinColumns={@JoinColumn(name="ORDER_ID")})*/
 	@OneToMany(mappedBy="item", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	private List<ItemsInOrder> itemsInOrder;
-
 	
+	public ItemDetails() {
+	}
+
+	public ItemDetails(String restaurantName, String itemName) {
+		this.restaurantName = restaurantName;
+		this.itemName = itemName;
+	}
+
 	public int getItem_id() {
 		return item_id;
 	}
@@ -46,11 +53,11 @@ public class ItemDetails {
 	}
 
 	public String getRestaurantName() {
-		return RestaurantName;
+		return restaurantName;
 	}
 
 	public void setRestaurantName(String restaurantName) {
-		RestaurantName = restaurantName;
+		this.restaurantName = restaurantName;
 	}
 
 	public String getItemName() {

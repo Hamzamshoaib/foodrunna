@@ -1,6 +1,7 @@
 package com.foodrunna.servlets;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,14 +57,21 @@ public class Login extends HttpServlet {
 			//Storing details in UserDetails object
 			user.setUserEmail(email);
 			user.setUserPassword(pw);
-			String validLogin = GetUserDetails.ValidateLogin(user);
-			if (validLogin.equals("verified")) {
+			List<String> validLogin = GetUserDetails.ValidateLogin(user);
+			if (validLogin.get(0).equals("verified")) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("userEmail", email);
+				session.setAttribute("userID", validLogin.get(1));
 				//HttpSession session = request.getSession();
 				//UserDetails user = (UserDetails)session.getAttribute("users");
 				System.out.println("valid login");
+				System.out.println(validLogin.get(1));
+				response.sendRedirect("http://localhost:8080/foodrunna/home");
 			}
-			else if (validLogin.equals("unverified")) {
-				System.out.println("user not Verified");
+			else if (validLogin.get(0).equals("unverified")) {
+				message = "Please Verify Your Account to Login!";
+				request.setAttribute("message", message);
+				request.getRequestDispatcher("Login.jsp").forward(request, response);
 			}
 			else {
 				message = "Invalid Email or Password!";

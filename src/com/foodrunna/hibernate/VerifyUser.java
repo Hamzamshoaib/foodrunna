@@ -1,15 +1,8 @@
 package com.foodrunna.hibernate;
 
-import java.util.List;
-
-import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.ProjectionList;
-import org.hibernate.criterion.Projections;
-
-import com.foodrunna.DTO.UserDetails;
 
 public class VerifyUser {
 	

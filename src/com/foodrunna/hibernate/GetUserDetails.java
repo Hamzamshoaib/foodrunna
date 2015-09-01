@@ -88,9 +88,10 @@ public class GetUserDetails {
 	}
 	
 	//Compares user input with login credentials in the database
-	public static String ValidateLogin (UserDetails loginInfo) {
-		String exists;
-		String value = new String();
+	public static List<String> ValidateLogin (UserDetails loginInfo) {
+		List<String> exists = new ArrayList<String>();
+		String status = new String();
+		String id = new String();
 		Session session = HibernateUtil.getSessionFactory().openSession();
 			session.beginTransaction();
 			Criteria crit = session.createCriteria(UserDetails.class);
@@ -98,18 +99,24 @@ public class GetUserDetails {
 			crit.add(Restrictions.eq("userPassword", loginInfo.getUserPassword()));
 			ProjectionList proList = Projections.projectionList();
 			proList.add(Projections.property("email_Verification"));
+			proList.add(Projections.property("userID"));
 			crit.setProjection(proList);
-			List<String> result = crit.list();
+			List<Object[]> result = crit.list();
 			if (result.isEmpty() || result.size() > 1) {
-				exists = "invalid";
+				exists.add("invalid");
 			}
 			else {
-				value = result.get(0);
-				if (value.equals("verified")) {
-					exists = "verified";
+				for (Object[] r: result) {
+					status = (String)r[0];
+					id = (String)r[1];				
+				}
+				if (status.equals("verified")) {
+					exists.add("verified");
+					exists.add(id);
 				}
 				else {
-					exists = "unverified";
+					exists.add("unverified");
+					exists.add(id);
 				}
 			}
 			
