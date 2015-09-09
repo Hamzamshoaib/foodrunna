@@ -7,26 +7,39 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>FoodRunna - SignUp</title>
+<link rel="stylesheet" type="text/css" href="resources/css/signup.css">
 </head>
 <body>
+	<jsp:useBean id="url"  class="com.foodrunna.bean.URL" scope="page" />
 	<!-- Links back to the login/home page -->
-	<a href="http://localhost:8080/foodrunna/login">Home</a>
-	<h1>Registration Form</h1>
+	<a href= "login">Home</a>
 	<!-- For loop below prints out all the error messages -->
-	<c:forEach var="msg" items="${message}">
-		<c:out value="${msg}" /> <br>
-	</c:forEach>
-	<p> Passwords must be 8 - 16 characters. Must contain Numbers, Uppercase, Lowercase and
-		only the following characters (. [ ] _ ^ & # @ ? / ; :)</p>
-	<c:set var="message" value="" scope="request" />
-	<form action="signup" method="POST">
-		First Name: <input type="text" name="firstName"><br>
-		Last Name: <input type="text" name="lastName"><br>
-		Email: <input type="text" name="email"><br>
-		Password: <input type="password" name="password"><br>
-		Confirm Password: <input type="password" name="confirmPassword"><br>
-		Mobile #: <input type="text" name="mobileNumber"><br>
-		<input type="submit" value="Register">
-	</form>
+	<div id="dilogo"><img id="logo" src="images/logo.png" /></div>		
+	<div class="container">
+    <form  id = "signup" action="signup" method="POST">
+
+        <div class="header">
+        
+            <h3>Register</h3>
+            
+            
+        </div>
+        <ul class="error"><c:forEach var="msg" items="${message}">
+			<li><c:out value="${msg}" /></li>
+		</c:forEach></ul>
+        <div class="sep"></div><br>
+        <div class="inputs">
+        	<input type="text" name="firstName" placeholder="First Name" value="${firstname}">
+        	<input type="text" name="lastName" placeholder="Last Name" value="${lastname}">
+			<input type="text" name="email" placeholder="e-mail" value="${email}">
+			<input type="password" name="password" placeholder="Password">
+			<input type="password" name="confirmPassword" placeholder="Confirm Password">
+			<input type="text" name="mobileNumber" placeholder="Mobile #" value="${mobile}">
+            <input type="submit" id="register" value="Register">
+        
+        </div>
+    </form>
+</div>
+
 </body>
 </html>

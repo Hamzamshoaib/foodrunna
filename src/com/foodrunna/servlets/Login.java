@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.foodrunna.DTO.UserDetails;
+import com.foodrunna.bean.URL;
 import com.foodrunna.hibernate.GetUserDetails;
 import com.foodrunna.inputcheck.EmailCheck;
 import com.foodrunna.inputcheck.PasswordCheck;
@@ -38,11 +39,6 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String fine = (String)request.getAttribute("firstTime");
-		if (fine == null){
-			System.out.println("Sup para = " + fine);
-			
-		}
 		UserDetails user = new UserDetails();
 		String email = request.getParameter("email");
 		String pw = request.getParameter("password");
@@ -62,11 +58,7 @@ public class Login extends HttpServlet {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("userEmail", email);
 				session.setAttribute("userID", validLogin.get(1));
-				//HttpSession session = request.getSession();
-				//UserDetails user = (UserDetails)session.getAttribute("users");
-				System.out.println("valid login");
-				System.out.println(validLogin.get(1));
-				response.sendRedirect("http://localhost:8080/foodrunna/home");
+				response.sendRedirect(URL.getUrl() + "home");
 			}
 			else if (validLogin.get(0).equals("unverified")) {
 				message = "Please Verify Your Account to Login!";

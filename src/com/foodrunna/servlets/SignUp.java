@@ -10,10 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.foodrunna.DTO.Status;
 import com.foodrunna.DTO.UserDetails;
+import com.foodrunna.bean.URL;
 import com.foodrunna.email.Email;
+import com.foodrunna.email.VerifyEmail;
 import com.foodrunna.hibernate.GetUserDetails;
 import com.foodrunna.hibernate.RegisterUser;
 import com.foodrunna.inputcheck.EmailCheck;
@@ -53,7 +56,6 @@ public class SignUp extends HttpServlet {
 		String userID = UUID.randomUUID().toString().replaceAll("-","");
 		while (GetUserDetails.UserIdExists(userID)) {
 			userID = UUID.randomUUID().toString().replaceAll("-","");
-			System.out.println(++i);
 		}
 		String userEmail = request.getParameter("email"); 
 		String userPassword = request.getParameter("password");
@@ -66,22 +68,31 @@ public class SignUp extends HttpServlet {
 		String email_Verification = UUID.randomUUID().toString(); 
 		Date dateCreated = new Date();
 		
+		request.setAttribute("firstname", firstName);
+		request.setAttribute("lastname", lastName);
+		request.setAttribute("email", userEmail);
+		request.setAttribute("mobile", mobile_Number);
+		
 		//Validating Input
 		boolean invalidInput = false;
 		ArrayList<String> message = new ArrayList<String>();
 		if (firstName.isEmpty()) {
+			request.removeAttribute("firstname");
 			message.add("Please Enter Your First Name\n");
 			invalidInput = true;
 		}
 		else if (!IsAlpha.isAlpha(firstName)) {
+			request.removeAttribute("firstname");
 			message.add("First Name can only contain letters\n");
 			invalidInput = true;			
 		}
 		if (lastName.isEmpty()) {
+			request.removeAttribute("lastname");
 			message.add("Please Enter Your Last Name\n");
 			invalidInput = true;
 		}
 		else if (!IsAlpha.isAlpha(lastName)) {
+			request.removeAttribute("lastname");
 			message.add("Last Name can only contain letters\n");
 			invalidInput = true;
 		}
@@ -96,26 +107,32 @@ public class SignUp extends HttpServlet {
 			invalidInput = true;
 		}
 		else if (!PasswordCheck.passwordFormat(userPassword)) { //Matching Passwords
-			message.add("Password Criteria Did Not Match");
+			message.add("Passwords must be 8 - 16 characters. Must Contain Numbers, Uppercase and Lowercase. Password May include" +
+		" only the following characters (. [ ] _ ^ & # @ ? / ; :)");
 			invalidInput = true;
 		}
 		if (userEmail.isEmpty()) {
+			request.removeAttribute("email");
 			message.add("Please Enter Your Email\n");
 			invalidInput = true;
 		}
 		else if (!EmailCheck.emailFormat(userEmail)) {
+			request.removeAttribute("email");
 			message.add("Incorrect Email Format\n");
 			invalidInput = true;
 		}
 		if (mobile_Number.isEmpty()) {
+			request.removeAttribute("mobile");
 			message.add("Please Enter Your Mobile Number\n");
 			invalidInput = true;
 		}
 		else if (!MobileNumberCheck.MobileFormat(mobile_Number)) {
+			request.removeAttribute("mobile");
 			message.add("Please Provide a correct Mobile Number\n");
 			invalidInput = true;
 		}
 		if (GetUserDetails.EmailExists(userEmail)) {
+			request.removeAttribute("email");
 			message.add("Email Address Already Exists");
 			invalidInput = true;
 		}
@@ -128,11 +145,9 @@ public class SignUp extends HttpServlet {
 			UserDetails newUser = new UserDetails(userID,userEmail, userPassword, firstName, lastName, mobile_Number, status, 
 					mobile_Number_Verification, email_Verification, dateCreated);
 			RegisterUser.addToDatabase(newUser); //Add user to the database
-			Email sendVerifyEmail = new Email(); //Send a verification email
-			sendVerifyEmail.sendVerifyEmail(userEmail, email_Verification, firstName);
-			response.sendRedirect("http://localhost:8080/foodrunna/login");
+			VerifyEmail.sendVerifyEmail(userEmail, email_Verification, firstName); //Send a verification email
 			
-			
+			response.sendRedirect(URL.getUrl() + "login");
 		}
 	}
 

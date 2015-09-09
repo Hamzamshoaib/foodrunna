@@ -1,0 +1,58 @@
+@CHARSET "US-ASCII";
+body{
+	font-family: 'Capriola', sans-serif;
+}
+body{
+	heigth: 100%;
+	width: 100%;
+	background-image:url("lunch1.jpg");
+	background-attachment: fixed;
+}	
+.wrap{
+	margin:0 auto;
+	width:1000px;
+}
+.logo {
+	position: relative;
+	bottom: 100px;
+	background-color: rgba(0,0,0,0.7);
+	height: 400px;
+	width: 500px;
+	margin: auto;
+}
+.logo h1{
+	font-size:200px;
+	color:#a60404;
+	text-align:center;
+	margin-bottom:1px;
+	text-shadow:4px 4px 1px white;
+}	
+.logo p{
+	color:#B1A18D;;
+	font-size:20px;
+	margin-top:1px;
+	text-align:center;
+}	
+.logo p span{
+	color:lightgreen;
+}	
+.sub a{
+	color:#a60404;
+	text-decoration:none;
+	padding:5px;
+	font-size:13px;
+	font-family: arial, serif;
+	font-weight:bold;
+}
+#dilogo {
+	height: 100px;
+	width: 100px;
+	position: relative;
+	top: 80px;
+	margin: 0 auto;
+	z-index: 1;
+}
+#logo {
+	height: 100px;
+	width: 100px;
+}

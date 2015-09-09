@@ -2,7 +2,6 @@ package com.foodrunna.DTO;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +32,7 @@ public class ItemDetails {
 	@JoinTable(name="ITEMS_IN_ORDER",
 	joinColumns={@JoinColumn(name="ITEM_ID")},
 	inverseJoinColumns={@JoinColumn(name="ORDER_ID")})*/
-	@OneToMany(mappedBy="item", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="item", fetch=FetchType.LAZY)
 	private List<ItemsInOrder> itemsInOrder;
 	
 	public ItemDetails() {
@@ -42,6 +41,14 @@ public class ItemDetails {
 	public ItemDetails(String restaurantName, String itemName) {
 		this.restaurantName = restaurantName;
 		this.itemName = itemName;
+	}
+	
+
+	public ItemDetails(String restaurantName, String itemName,
+			List<ItemsInOrder> itemsInOrder) {
+		this.restaurantName = restaurantName;
+		this.itemName = itemName;
+		this.itemsInOrder = itemsInOrder;
 	}
 
 	public int getItem_id() {

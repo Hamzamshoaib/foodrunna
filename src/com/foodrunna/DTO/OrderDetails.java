@@ -24,7 +24,7 @@ public class OrderDetails {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	private int orderId;
 	
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="USER_ID")
 	private UserDetails userId;
 	
@@ -48,22 +48,31 @@ public class OrderDetails {
 	@JoinTable(name="ITEMS_IN_ORDER",
 			joinColumns={@JoinColumn(name="ORDER_ID")},
 			inverseJoinColumns={@JoinColumn(name="ITEM_ID")})*/
-	@OneToMany(mappedBy="order", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="order", fetch=FetchType.LAZY)
 	private List<ItemsInOrder> itemsInOrder;	
 	
 	public OrderDetails() {
 	}
 	
 	public OrderDetails(UserDetails userId, String restaurantName,
-			String deliveryTime, Address deliveryAddress, int extraCost,
-			int totalCost) {
+			String deliveryTime, Address deliveryAddress) {
 		this.userId = userId;
 		this.restaurantName = restaurantName;
 		this.deliveryTime = deliveryTime;
 		this.deliveryAddress = deliveryAddress;
-		this.extraCost = extraCost;
-		this.totalCost = totalCost;
 	}
+	
+	
+	public OrderDetails(UserDetails userId, String restaurantName,
+			String deliveryTime, Address deliveryAddress,
+			List<ItemsInOrder> itemsInOrder) {
+		this.userId = userId;
+		this.restaurantName = restaurantName;
+		this.deliveryTime = deliveryTime;
+		this.deliveryAddress = deliveryAddress;
+		this.itemsInOrder = itemsInOrder;
+	}
+
 	public int getOrderId() {
 		return orderId;
 	}

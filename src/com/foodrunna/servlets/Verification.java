@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.foodrunna.bean.URL;
 import com.foodrunna.hibernate.GetUserDetails;
 import com.foodrunna.hibernate.VerifyUser;
 
@@ -32,8 +33,11 @@ public class Verification extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uniqueID = request.getParameter("verification_token");
-		System.out.println(uniqueID);
-		if (Pattern.matches("[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}", uniqueID)) {
+		if (uniqueID == null) {
+			request.setAttribute("message", "Link Invalid or Expired");
+			request.getRequestDispatcher("login").forward(request, response);
+		}
+		else if (Pattern.matches("[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}", uniqueID)) {
 			System.out.println("matches");
 			List<String> data = GetUserDetails.GetUserName(uniqueID);
 			if (!data.isEmpty()) {
@@ -44,14 +48,18 @@ public class Verification extends HttpServlet {
 				System.out.println("line 39");
 				VerifyUser.ChangeToVerified(uniqueID);
 				System.out.println("User " + firstName + " Changed to Verified");
+				response.sendRedirect(URL.getUrl() + "home");
 			}
 			else {
-				System.out.println("Invalid ID or USER Already verified");
+				request.setAttribute("message", "Invalid ID or Account Already verified");
+				request.getRequestDispatcher("login").forward(request, response);
+			
 			}
 
 		}
 		else {
-			System.out.println("i am not crashing");
+			request.setAttribute("message", "Link Invalid or Expired");
+			request.getRequestDispatcher("login").forward(request, response);
 		}
 		
 	}

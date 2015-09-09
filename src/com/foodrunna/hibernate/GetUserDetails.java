@@ -125,4 +125,30 @@ public class GetUserDetails {
 		
 		return exists;
 	}
+	
+	//Function Retrives user password
+		public static List<String> GetPassword (String email) {
+			List<String> exists = new ArrayList<String>();
+			String password = new String();
+			String firstName = new String();
+			Session session = HibernateUtil.getSessionFactory().openSession();
+				session.beginTransaction();
+				Criteria crit = session.createCriteria(UserDetails.class);
+				crit.add(Restrictions.eq("userEmail", email));
+				ProjectionList proList = Projections.projectionList();
+				proList.add(Projections.property("firstName"));
+				proList.add(Projections.property("userPassword"));
+				crit.setProjection(proList);
+				List<Object[]> result = crit.list();
+				if (!result.isEmpty() && result.size() == 1) {
+					for (Object[] r: result) {
+						exists.add((String)r[0]);
+						exists.add((String)r[1]);				
+					}
+				}
+				session.getTransaction().commit();
+				session.close();
+			
+			return exists;
+		}
 }

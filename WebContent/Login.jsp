@@ -7,23 +7,47 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>FoodRunna - Login</title>
-<link rel="stylesheet" type="text/css" href="resources/css/mystyle.css">
+<link rel="stylesheet" type="text/css" href="resources/css/login.css" media="screen" />
 </head>
 <body>
 	<!-- If statement below checks to see if a session exists -->
 	<c:if test="${not empty userEmail}">
-		<c:redirect url="http://localhost:8080/foodrunna/Home.jsp" />
-	</c:if>	
+		<jsp:useBean id="url"  class="com.foodrunna.bean.URL" scope="page" />
+		<c:redirect url= "home"/>
+	</c:if>
+	<div id="dilogo"><img id="logo" src="images/logo.png" /></div>	
 	<!-- Including the header file -->
-	<jsp:include page="/includeDirective/loginHeader.jsp" />
-	<div class="try"></div>
-	${message}
-	<form action="login" method="POST">
-		Email: <input type="text" name="email"><br>
-		Password: <input type="password" name="password"><br>
-		<input type="submit" value="Login">
-	</form>
-	<form action="signup" method ="GET"> <input type="submit" value="Register"> </form>
+	<%--<jsp:include page="/includeDirective/loginHeader.jsp" />--%>
+	<div class="container">
+	<div id="signup">
+    <form  action="login" method="POST">
+
+        <div class="header">
+        
+            <h3>Login</h3>
+            
+            
+        </div>
+        
+        <div class="sep"></div><br>
+		<p class="error">${message}</p>
+        <div class="inputs">
+        
+            <input type="email" name = "email" placeholder="e-mail" autofocus />
+        
+            <input type="password" name = "password" placeholder="Password" />
+            <a href="forgotpassword">Forgot Your Password?</a>
+            
+            <input type="submit" id="login" value="Login">
+        
+        </div>
+    </form>
+    <form action="signup" method ="GET"> <div class="inputs"><input type="submit" id ="register" value="Register"></div>
+   </form>
+   </div>
+</div>
+	
+	
 
 	
 </body>

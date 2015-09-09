@@ -10,7 +10,7 @@ public class PasswordCheck {
 		if (password.length() < 8 || password.length() > 16) { //must be between 8 and 16 characters
 			validFormat = false;
 		}
-		if (!Pattern.matches(".*[.\\[\\]\\^&_#@?/;:]+.*", password) || Pattern.matches(".*[\"\'\\\\<>].*", password)){ 
+		if (!Pattern.matches(".*[.\\[\\]\\^&_#@?/;:]*.*", password) || Pattern.matches(".*[\"\'\\\\<>].*", password)){ 
 			//password must include . [ ] _ ^ & # @ ? / ; :
 			//password must not include " ' \ < >
 			validFormat = false;

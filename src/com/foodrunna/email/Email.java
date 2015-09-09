@@ -38,7 +38,7 @@ public class Email {
 		});
 	}
 	
-	public boolean sendVerifyEmail(String to, String IDToken, String firstName){
+	public boolean sendEmail(String to, String sbjt, String msg){
 
 	      try {
 	         // Create a default MimeMessage object.
@@ -51,15 +51,9 @@ public class Email {
 	         message.setRecipients(Message.RecipientType.TO,
 	         InternetAddress.parse(to));
 	         // Set Subject: header field
-	         message.setSubject("Please Verify Your Email Address For FoodRunna");
+	         message.setSubject(sbjt);
 	         // Now set the actual message
-	         message.setText("Dear " + firstName + "\n\n"
-	         		+ "Welcome to FoodRunna! You are almost ready to get your favourite food delivered to you.\n\n"
-	         		+ "To use your account, please verify your email by clicking this link "
-	         		+ "\n\n\thttp://localhost:8080/foodrunna/verification?verification_token=" + IDToken
-	         		+ "\n\n"
-	         		+ "Thanks\n"
-	         		+ "Team FoodRunna :)");
+	         message.setText(msg);
 
 	         // Send message
 	         Transport.send(message);
